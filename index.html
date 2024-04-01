@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="rgb(237, 25, 159)">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            width: 100%;
+            min-height:90vh;
+            padding: 0.3rem;
+            border:10px solid rgb(237, 25, 159);
+            border-radius: 5px;
+            text-align: center;
+
+        }
+        .bolck{
+            border: 5px solid rgb(245, 170, 51);
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background: #b4dff0;
+        }
+        .active-display{
+            width: 100%;
+            height: 150px;
+            background: #141414;
+            border: 5px solid #ff0;
+            padding: 10px;
+            color:#ffffff;
+            transform: translateX(-110%);
+            transition: all 1s ease;
+            
+        }
+        .active-click{
+            transform: translateX(1%);
+        }
+        
+        .passive-display{
+            width: 100%;
+            height: 150px;
+            background: #141414;
+            border: 5px solid #ff0;
+            padding: 10px;
+            color:#ffffff;
+            transform: translateX(-110%);
+            transition: all 1s ease;
+            
+        }
+        .passive-click{
+            transform: translateX(1%);
+        }
+
+        .title{
+            font-size: 20px;
+            font-weight: 800;
+        }
+        .btn{
+            width:100px;
+            height:40px;
+            background: #080395;
+            border-radius: 5px;
+            color:#ffffff;
+            font-weight: 700;
+            margin-top: 20px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bolck">
+            <h2>Active sentence</h2>
+            <div class="active-display" id="ac-display">
+                <p  class="title" active-word> Click next button</p>
+            </div>
+            <div>
+                <button class="btn" active-button >Next</button>
+            </div>
+        </div>
+        <div class="bolck">
+        <h2>Passive sentence</h2>
+        <div class="passive-display" id="pc-display">
+            <p  class="title" passive-word> Subject doing some word</p>
+        </div>
+        <div>
+            <button class="btn" passive-button>Next</button>
+        </div>
+       </div>
+       
+       <div class="bolck">
+        <h2>Modal verb</h2>
+        <div class="passive-display" id="modal-display">
+            <p  class="title" modal-word> Subject doing some word</p>
+        </div>
+        <div>
+            <button class="btn" modal-button>Next</button>
+        </div>
+       </div>
+
+    </div>
+    <script>
+        
+        const acDisplay = document.querySelector("#ac-display")
+        const btn = document.querySelector("[active-button]")
+        const title = document.querySelector("[active-word]")
+
+        const pcDisplay = document.querySelector("#pc-display")
+        const pbtn = document.querySelector("[passive-button]")
+        const ptitle = document.querySelector("[passive-word]")
+
+        const modalDisplay = document.querySelector("#modal-display")
+        const mbtn = document.querySelector("[modal-button]")
+        const mtitle = document.querySelector("[modal-word]")
+
+
+        const activeRandom = new Map();
+        const passiveRandom = new Map();
+        const modalRandom = new Map();
+               
+            // active================================
+        btn.addEventListener('click',()=>{
+            
+            let random = Math.floor(Math.random()*48 + 1)
+            //activeRandom.set(random,random)
+            //remove passive
+            pcDisplay.classList.remove('passive-click');
+            modalDisplay.classList.remove('passive-click')
+            let count =0;
+           
+            if(activeRandom.size>47){
+                
+                title.textContent='You access All Char, refresh page';
+                acDisplay.classList.add('active-click')
+            }
+            else{  
+                //
+            btn.setAttribute("disabled","")
+            pbtn.setAttribute("disabled","")
+            pbtn.textContent="disabled"
+            mbtn.setAttribute("disabled","")
+            mbtn.textContent="disabled"
+            // while loop
+
+            while(activeRandom.get(random) === random){
+                if(count>activeRandom.size) break
+                random = Math.floor(Math.random()*48 + 1);
+                count++
+               
+            }
+           //
+          
+            const value= getActiveSentence(random);
+            title.textContent=value;
+            acDisplay.classList.add('active-click')
+            if(activeRandom.get(random) !== random)
+            {
+                activeRandom.set(random,random)
+            }
+            
+            let second=30;
+            
+            const timer = setInterval(()=>{
+                second--;
+                btn.textContent=second;
+            },1000)
+            // set time out
+            setTimeout(()=>{
+            title.textContent='Click next button';
+            acDisplay.classList.remove('active-click')
+            clearInterval(timer)
+            pbtn.textContent="Next";
+            pbtn.removeAttribute("disabled")
+
+            mbtn.textContent="Next";
+            mbtn.removeAttribute("disabled")
+
+            btn.textContent="Next";
+            btn.removeAttribute("disabled")
+            },30000)
+        }
+            // set time out
+        })
+
+        // passive =================================
+    pbtn.addEventListener('click',()=>{
+        //
+
+    let random = Math.floor(Math.random()*48 + 1)
+    const value= getPassiveSentence(random);
+    //remove active
+    acDisplay.classList.remove('active-click')
+    modalDisplay.classList.remove('passive-click')
+    let count =0;
+    //
+    if(passiveRandom.size>47){
+                ptitle.textContent='You access All Char, refresh page';
+                pcDisplay.classList.add('passive-click')
+            }
+            else{  
+            pbtn.setAttribute("disabled","")
+            btn.setAttribute("disabled","")
+            btn.textContent="disabled"
+            mbtn.setAttribute("disabled","")
+            mbtn.textContent="disabled"
+                // while loop
+
+            while(passiveRandom.get(random) === random){
+                if(count>passiveRandom.size) break
+                random = Math.floor(Math.random()*48 + 1);
+                count++
+               
+            }
+    ptitle.textContent=value;
+    pcDisplay.classList.add('passive-click')
+   
+    if(passiveRandom.get(random) !== random)
+            {
+                passiveRandom.set(random,random)
+            }
+    let second=30;
+    
+    const timer = setInterval(()=>{
+        second--;
+        pbtn.textContent=second;
+    },1000)
+
+    setTimeout(()=>{
+     ptitle.textContent='Click next button';
+    pcDisplay.classList.remove('passive-click')
+    clearInterval(timer)
+            pbtn.textContent="Next";
+            pbtn.removeAttribute("disabled")
+
+            mbtn.textContent="Next";
+            mbtn.removeAttribute("disabled")
+
+            btn.textContent="Next";
+            btn.removeAttribute("disabled")
+    },30000)
+}
+})
+// modal ===============================
+mbtn.addEventListener('click',()=>{
+        //
+    let random = Math.floor(Math.random()*73 + 1)
+    const value= getModalSentence(random);
+    //remove active
+    acDisplay.classList.remove('active-click')
+    pcDisplay.classList.remove('passive-click')
+    let count = 0;
+    //
+    
+    if(modalRandom.size>72){
+                
+                mtitle.textContent='You access All Char, refresh page';
+                modalDisplay.classList.add('passive-click')
+            }
+            else{ 
+            pbtn.setAttribute("disabled","")
+            btn.setAttribute("disabled","")
+            mbtn.setAttribute("disabled","")
+            btn.textContent="disabled"
+            pbtn.textContent="disabled"
+            //====================
+             // while loop
+
+             while(modalRandom.get(random) === random){
+                if(count>modalRandom.size) break
+                random = Math.floor(Math.random()*73 + 1);
+                count++
+            }
+    mtitle.textContent=value;
+    modalDisplay.classList.add('passive-click')
+    
+      if(modalRandom.get(random) !== random)
+            {
+                modalRandom.set(random,random)
+            }
+    let second=30;
+    
+    const timer = setInterval(()=>{
+        second--;
+        mbtn.textContent=second;
+    },1000)
+
+    setTimeout(()=>{
+     mtitle.textContent='Click next button';
+     modalDisplay.classList.remove('passive-click')
+    clearInterval(timer)
+            pbtn.textContent="Next";
+            pbtn.removeAttribute("disabled")
+
+            mbtn.textContent="Next";
+            mbtn.removeAttribute("disabled")
+
+            btn.textContent="Next";
+            btn.removeAttribute("disabled")
+    },30000)
+}
+})
+
+       //=============================
+        const getActiveSentence = (random)=>{
+            switch(random){
+                //present Tense
+                // simple present
+                case 1: return('Subject do something')
+                case 2: return('Do/Does Subject do something')
+                case 3: return('Subject Do/Does not do something')
+                case 4: return('Why Do/Does not Subject do something')
+                // present Progressive/continuous
+                case 5 :return('Subject is/am/are doing something')
+                case 6: return('is/am/are Subject doing something')
+                case 7: return('Subject is/am/are not doing something')
+                case 8: return('Why is/am/are not Subject doing something')
+                // present Perfect
+                case 9 : return('Subject Has/Have done something')
+                case 10: return('Has/Have Subject done something')
+                case 11: return('Subject Has/Have not done something')
+                case 12: return('Why Has/Have not Subject done something')
+                // present Perfect continuous
+                case 13: return('Subject Has/Have been doing something for a year')
+                case 14: return('Has/Have Subject been doing something for a year')
+                case 15: return('Subject Has/Have not been doing something for a year')
+                case 16: return('how long Has/Have not Subject been doing something for a year')
+                //====================Past Tense==========================
+                // simple Past
+                case 17: return('Subject made something')
+                case 18: return('did Subject make something')
+                case 19: return('Subject did not make something')
+                case 20: return('Why did not Subject make something')
+                // Past Progressive/continuous
+                case 21: return('Subject was/were doing something')
+                case 22: return('was/were Subject doing something')
+                case 23: return('Subject was/were not doing something')
+                case 24: return('why was/were not Subject doing something')
+                // Past Perfect
+                case 25: return('Subject had done something')
+                case 26: return('had Subject done something')
+                case 27: return('Subject had not done something')
+                case 28: return('Why had not Subject done something')
+                // Past Perfect continuous
+                case 29: return('Subject had been doing something for 10 month')
+                case 30: return('had Subject been doing something for 10 month')
+                case 31: return('Subject had not been doing something for 10 month')
+                case 32: return('how long had not Subject been doing something for 10 month')
+                //====================Future Tense==========================
+                // simple Future
+                case 33: return('Subject will do something')
+                case 34: return('will Subject do something')
+                case 35: return('Subject will not do something')
+                case 36: return('why will not Subject do something')
+                // Past Progressive/continuous
+                case 37: return('Subject will  be doing something')
+                case 38: return('will Subject be doing something')
+                case 39: return('Subject will not be doing something')
+                case 40: return('why will not Subject be doing something')
+                // Past Perfect
+                case 41: return('Subject will have done something')
+                case 42: return('will Subject have done something')
+                case 43: return('Subject will not have done something')
+                case 44: return('why will not Subject have done something')
+                // Past Perfect continuous
+                case 45: return('Subject will have been doing something for 5 month')
+                case 46: return('will Subject have been doing something for 5 month')
+                case 47: return('Subject will not have been doing something for 5 month')
+                case 48: return('why will not Subject have been doing something for 5 month')
+
+                default: return(`${random} is not in db`)
+
+            }
+        }
+
+        const getPassiveSentence = (random)=>{
+            switch(random){
+                //present Tense
+                // simple present
+                case 1: return('Object is/am/are done by someone')
+                case 2: return('is/am/are Object done by someone')
+                case 3: return('Object is/am/are not done by someone')
+                case 4: return('Why is/am/are not Object done by someone')
+                // present Progressive/continuous
+                case 5 :return('Object is/am/are being done by someone')
+                case 6: return('is/am/are Object being done by someone')
+                case 7: return('Object is/am/are not being done by someone')
+                case 8: return('Why is/am/are not Object being done by someone')
+                // present Perfect
+                case 9 : return('Object Has/Have been done by someone')
+                case 10: return('Has/Have Object been done by someone')
+                case 11: return('Object Has/Have not been done by someone')
+                case 12: return('Why Has/Have not Object been done by someone')
+                // present Perfect continuous
+                case 13: return('Object Has/Have been being done by someone for a year')
+                case 14: return('Has/Have Object been being done by someone for a year')
+                case 15: return('Object Has/Have not been being done by someone for a year')
+                case 16: return('how long Has/Have not Object been being done by someone for a year')
+                //====================Past Tense==========================
+
+                // simple Past
+                case 17: return('Object was/were done by someone')
+                case 18: return('was/were Object done by someone')
+                case 19: return('Object was/were not done by someone')
+                case 20: return('Why was/were not Object done by someone')
+                // Past Progressive/continuous
+                case 21: return('Object was/were being done by someone')
+                case 22: return('was/were Object being done by someone')
+                case 23: return('Object was/were not being done by someone')
+                case 24: return('why was/were not Object being done by someone')
+                // Past Perfect
+                case 25: return('Object had been done by someone')
+                case 26: return('had Object been done by someone')
+                case 27: return('Object had not been done by someone')
+                case 28: return('Why had not Object been done by someone')
+                // Past Perfect continuous
+                case 29: return('Object had been being done by someone for 10 month')
+                case 30: return('had Object been being done by someone for 10 month')
+                case 31: return('Object had not been being done by someone for 10 month')
+                case 32: return('how long had not Object been being done by someone for 10 month')
+                //====================Future Tense==========================
+                // simple Future
+                case 33: return('Object will be done by someone')
+                case 34: return('will Object be done by someone')
+                case 34: return('Object will not be done by someone')
+                case 36: return('why will not Object be done by someone')
+                // Future Progressive/continuous
+                case 37: return('Object will be being done by someone')
+                case 38: return('will Object be being done by someone')
+                case 39: return('Object will not be being done by someone')
+                case 40: return('why will not Object be being done by someone')
+                // Future Perfect
+                case 41: return('Object will has/have been done by someone')
+                case 42: return('will Object has/have been done by someone')
+                case 43: return('Object will not has/have been done by someone')
+                case 44: return('why will not Object has/have been done by someone')
+                // Future Perfect continuous
+                case 45: return('Object will has/have been being done by someone for 5 month')
+                case 46: return('will Object has/have been being done by someone for 5 month')
+                case 47: return('Object will not has/have been being done by someone for 5 month')
+                case 48: return('how log will not Object has/have been being done by someone for 5 month')
+
+                default: return(`${random} is not in db`)
+
+            }
+        }
+
+    </script>
+     <script>
+        const getModalSentence = (random)=>{
+            switch(random){
+               
+                // can
+                case 1 : return ('Subject can do something')
+                case 2: return('can Subject do something')
+                case 3: return('Subject can not do something')
+                case 4: return(' why can not subject do something')
+                // could
+                case 5 : return ('Subject could do something')
+                case 6: return('could Subject do something')
+                case 7: return('Subject could not do something')
+                case 8: return('why could not Subject do something')
+                // Should
+                case 9 : return ('Subject should do something')
+                case 10: return('should Subject do something')
+                case 11: return('Subject should not do something')
+                case 12: return('why should not Subject do something')
+                // used to
+                case 13 : return ('Subject used to do something')
+                case 14: return('did Subject use to do something')
+                case 15: return('Subject did not use to do something')
+                case 16: return('why did not Subject use to do something')
+                
+                // might/may
+                case 17 : return ('Subject may/might do something')
+                case 18: return('may/might Subject do something')
+                case 19: return('Subject may/might not do something')
+                case 20: return('why may/might not Subject use to do something')
+                // may/might have to 
+                case 21 : return ('Subject may/might have to do something')
+                case 22: return('may/might Subject not have to do something')
+                case 23: return('Subject may/might not have to do something')
+                case 24: return('why may/might not Subject have to do something')
+                // will have to 
+                case 25: return ('Subject will have to do something')
+                case 26: return('will Subject have to do something')
+                case 27: return('Subject will not have to do something')
+                case 28: return('why not Subject have to do something')
+                // need
+                case 29 : return ('Subject need noun')
+                case 30: return('do/does Subject need noun')
+                case 31: return('Subject do/does not need noun')
+                case 32: return('why do/does not Subject need noun')
+                // need to
+                case 33: return ('Subject need to do something')
+                case 34: return('do/does Subject need to do something')
+                case 34: return('Subject do/does not need to do something')
+                case 36: return('why do/does not Subject need to do something')
+                // needed
+                case 37: return ('Subject needed noun')
+                case 38: return('did Subject need noun')
+                case 39: return('Subject did need noun')
+                case 40: return('why did not Subject need noun')
+                // has to / have to
+                case 41: return ('Subject has/have to do something')
+                case 42: return('do/does Subject has/have to do something')
+                case 43: return('Subject do/does not has/have to do something')
+                case 44: return('why do/does not Subject has/have to do something')
+                // had to
+                case 45: return ('Subject had to do something')
+                case 46: return('did Subject has/have to do something')
+                case 47: return('Subject did not has/have to do something')
+                case 48: return('why did not Subject has/have to do something')
+                // going to
+                case 45: return ('Subject is/am/are going/about to do something')
+                case 46: return('is/am/are Subject going/about to do something')
+                case 47: return('Subject is/am/are not going/about to do something')
+                case 48: return('why is/am/are not Subject going/about to do something')
+                // going to was
+                case 49: return ('Subject was/were going/about to do something')
+                case 50: return('was/were Subject going/about to do something')
+                case 51: return('Subject was/were not going/about to do something')
+                case 52: return('why was/were not Subject going/about to do something')
+                // going to was
+                case 53: return ('Subject was/were going/about to do something')
+                case 54: return('was/were Subject going/about to do something')
+                case 55: return('Subject was/were not going/about to do something')
+                case 56: return('why was/were not Subject going/about to do something')
+                // would have
+                case 57: return ('if subject did something , subject would have done something')
+                case 58: return('Subject could have done somthing')
+                case 59: return('could Subject have done somthing')
+                case 60: return(' Subject could not have done somthing')
+                // should have
+                case 61: return(' Subject  have done somthing')
+                case 62: return(' should Subject have done somthing')
+                case 63: return('Subject should not have done somthing')
+                // keep/keep on
+                case 64: return(' Subject  keep/keep on doing somthing')
+                case 65: return(' should Subject have done somthing')
+
+                case 66: return('Subject  kept/kept on doing somthing')
+                case 67: return('Subject will keep/keep on doing somthing')
+                case 67: return('question word to do')
+                case 68: return('as long as')
+                case 69: return('so that')
+                case 70: return('either or')
+                case 71: return('neither nor')
+                case 72: return('unlit / unless nor')
+                case 73: return('One should be smart')
+
+                default: return(`${random} is not in db`)
+
+            }
+        }
+    </script>
+</body>
+</html>
