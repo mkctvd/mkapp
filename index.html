@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f0f0f0">
+    <meta name="theme-color" content="rgb(237, 25, 159)">
     <title>Document</title>
     <style>
         *{
@@ -119,6 +119,9 @@
         const mbtn = document.querySelector("[modal-button]")
         const mtitle = document.querySelector("[modal-word]")
 
+        //let second =10;
+        const disableTimer = 30000;
+
 
         const activeRandom = new Map();
         const passiveRandom = new Map();
@@ -147,7 +150,7 @@
             mbtn.setAttribute("disabled","")
             mbtn.textContent="disabled"
             // while loop
-
+           
             while(activeRandom.get(random) === random){
                 if(count>activeRandom.size) break
                 random = Math.floor(Math.random()*48 + 1);
@@ -155,7 +158,6 @@
                
             }
            //
-          
             const value= getActiveSentence(random);
             title.textContent=value;
             acDisplay.classList.add('active-click')
@@ -183,7 +185,7 @@
 
             btn.textContent="Next";
             btn.removeAttribute("disabled")
-            },30000)
+            },disableTimer)
         }
             // set time out
         })
@@ -243,10 +245,10 @@
 
             btn.textContent="Next";
             btn.removeAttribute("disabled")
-    },30000)
+    },disableTimer)
 }
 })
-// modal ===============================
+// modal verb ===============================
 mbtn.addEventListener('click',()=>{
         //
     let random = Math.floor(Math.random()*73 + 1)
@@ -270,12 +272,14 @@ mbtn.addEventListener('click',()=>{
             pbtn.textContent="disabled"
             //====================
              // while loop
-
+             console.log(`outer ${random}`)
              while(modalRandom.get(random) === random){
+                console.log(`inner ${random}`)
                 if(count>modalRandom.size) break
                 random = Math.floor(Math.random()*73 + 1);
                 count++
             }
+            console.log(`after while ${random}`)
     mtitle.textContent=value;
     modalDisplay.classList.add('passive-click')
     
@@ -302,7 +306,7 @@ mbtn.addEventListener('click',()=>{
 
             btn.textContent="Next";
             btn.removeAttribute("disabled")
-    },30000)
+    },disableTimer)
 }
 })
 
@@ -329,7 +333,7 @@ mbtn.addEventListener('click',()=>{
                 case 13: return('Subject Has/Have been doing something for a year')
                 case 14: return('Has/Have Subject been doing something for a year')
                 case 15: return('Subject Has/Have not been doing something for a year')
-                case 16: return('how long Has/Have not Subject been doing something')
+                case 16: return('how long Has/Have not Subject been doing something for a year')
                 //====================Past Tense==========================
                 // simple Past
                 case 17: return('Subject made something')
@@ -350,7 +354,7 @@ mbtn.addEventListener('click',()=>{
                 case 29: return('Subject had been doing something for 10 month')
                 case 30: return('had Subject been doing something for 10 month')
                 case 31: return('Subject had not been doing something for 10 month')
-                case 32: return('how long had not Subject been doing something')
+                case 32: return('how long had not Subject been doing something for 10 month')
                 //====================Future Tense==========================
                 // simple Future
                 case 33: return('Subject will do something')
@@ -400,7 +404,7 @@ mbtn.addEventListener('click',()=>{
                 case 13: return('Object Has/Have been being done by someone for a year')
                 case 14: return('Has/Have Object been being done by someone for a year')
                 case 15: return('Object Has/Have not been being done by someone for a year')
-                case 16: return('how long Has/Have not Object been being done by something')
+                case 16: return('how long Has/Have not Object been being done by someone for a year')
                 //====================Past Tense==========================
 
                 // simple Past
@@ -422,7 +426,7 @@ mbtn.addEventListener('click',()=>{
                 case 29: return('Object had been being done by someone for 10 month')
                 case 30: return('had Object been being done by someone for 10 month')
                 case 31: return('Object had not been being done by someone for 10 month')
-                case 32: return('how long had not Object been being done by someone')
+                case 32: return('how long had not Object been being done by someone for 10 month')
                 //====================Future Tense==========================
                 // simple Future
                 case 33: return('Object will be done by someone')
@@ -443,7 +447,7 @@ mbtn.addEventListener('click',()=>{
                 case 45: return('Object will has/have been being done by someone for 5 month')
                 case 46: return('will Object has/have been being done by someone for 5 month')
                 case 47: return('Object will not has/have been being done by someone for 5 month')
-                case 48: return('how log will not Object has/have been being done by someone')
+                case 48: return('how log will not Object has/have been being done by someone for 5 month')
 
                 default: return(`${random} is not in db`)
 
