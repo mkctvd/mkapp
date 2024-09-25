@@ -84,9 +84,6 @@
 <body>
     <div class="container">
         <div class="bolck">
-         <div class ="total-number"> 
-            <p id="total-active"> </p>
-             </div>
             <h2>Active sentence</h2>
             <div class="active-display" id="ac-display">
                 <p  class="title" active-word> Click next button</p>
@@ -140,9 +137,6 @@
                
             // active================================
         btn.addEventListener('click',()=>{
-            let activeSize = activeRandom.size;
-            let totalActive = document.querySelector("#total-active");
-            totalActive.textContent(activeSize);
 
             let random = Math.floor(Math.random()*48 + 1)
             //activeRandom.set(random,random)
