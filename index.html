@@ -79,12 +79,15 @@
             color: red;
             margin:10px;
         }
+    .total-sentence{
+            color:#ff0000
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="bolck">
-            <h2>Active sentence</h2>
+            <h2><span id="total-active" class="total-sentence"></span> : Active sentence</h2>
             <div class="active-display" id="ac-display">
                 <p  class="title" active-word> Click next button</p>
             </div>
@@ -93,7 +96,7 @@
             </div>
         </div>
         <div class="bolck">
-        <h2>Passive sentence</h2>
+        <h2><span id="total-passive" class="total-sentence"></span>  :Passive sentence</h2>
         <div class="passive-display" id="pc-display">
             <p  class="title" passive-word> Subject doing some word</p>
         </div>
@@ -103,7 +106,7 @@
        </div>
        
        <div class="bolck">
-        <h2>Modal verb</h2>
+        <h2><span id="total-modal" class="total-sentence"></span> : Modal verb</h2>
         <div class="passive-display" id="modal-display">
             <p  class="title" modal-word> Subject doing some word</p>
         </div>
@@ -173,7 +176,11 @@
             {
                 activeRandom.set(random,random)
             }
-            
+            // display active number
+
+            let activeNumber = activeRandom.size;
+            document.querySelector("#total-active").textContent=activeNumber;
+            //
             let second=30;
             
             const timer = setInterval(()=>{
@@ -234,6 +241,11 @@
             {
                 passiveRandom.set(random,random)
             }
+                 // display passive number
+
+            let passiveNumber = passiveRandom.size;
+            document.querySelector("#total-passive").textContent=passiveNumber;
+            //
     let second=30;
     
     const timer = setInterval(()=>{
@@ -280,14 +292,12 @@ mbtn.addEventListener('click',()=>{
             pbtn.textContent="disabled"
             //====================
              // while loop
-             console.log(`outer ${random}`)
              while(modalRandom.get(random) === random){
                 console.log(`inner ${random}`)
                 if(count>modalRandom.size) break
                 random = Math.floor(Math.random()*73 + 1);
                 count++
             }
-            console.log(`after while ${random}`)
     mtitle.textContent=value;
     modalDisplay.classList.add('passive-click')
     
@@ -295,6 +305,11 @@ mbtn.addEventListener('click',()=>{
             {
                 modalRandom.set(random,random)
             }
+                 // display modal number
+
+            let modalNumber = modalRandom.size;
+            document.querySelector("#total-modal").textContent=modalNumber;
+            //
     let second=30;
     
     const timer = setInterval(()=>{
